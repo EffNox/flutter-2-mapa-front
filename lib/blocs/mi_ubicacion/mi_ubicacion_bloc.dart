@@ -32,7 +32,7 @@ class MiUbicacionBloc extends Bloc<MiUbicacionEvent, MiUbicacionState> {
   @override
   Stream<MiUbicacionState> mapEventToState(MiUbicacionEvent ev) async* {
     if (ev is OnChangeUbicacion) {
-      yield state.copyWith(existeUbicacion: true,ubicacion: ev.ubicacion);
+      yield state.copyWith(existeUbicacion: true, ubicacion: ev.ubicacion);
     }
   }
 }

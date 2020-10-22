@@ -26,8 +26,14 @@ class _MapaPgState extends State<MapaPg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MiUbicacionBloc, MiUbicacionState>(
-        builder: (_, st) => Center(child: crearMapa(st)),
+      body: Stack(
+        children: [
+          BlocBuilder<MiUbicacionBloc, MiUbicacionState>(
+            builder: (_, st) => Center(child: crearMapa(st)),
+          ),
+          Positioned(child: SearchBar(), top: 15),
+          MarkerManual(),
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -43,17 +49,22 @@ class _MapaPgState extends State<MapaPg> {
     final blMap = context.bloc<MapaBloc>();
     blMap.add(OnLocationUpdate(st.ubicacion));
 
-    return GoogleMap(
-      initialCameraPosition: initialLatLng,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: false,
-      zoomControlsEnabled: false,
-      onMapCreated: blMap.initMapa,
-      polylines: blMap.state.polylines.values.toSet(),
-      onTap: (v) {
-        if (blMap.state.seguirUbicacion) blMap.add(OnSeguirUbicacion());
+    return BlocBuilder<MapaBloc, MapaState>(
+      builder: (_, __) {
+        return GoogleMap(
+          initialCameraPosition: initialLatLng,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          onMapCreated: blMap.initMapa,
+          polylines: blMap.state.polylines.values.toSet(),
+          markers: blMap.state.markers.values.toSet(),
+          onTap: (v) {
+            if (blMap.state.seguirUbicacion) blMap.add(OnSeguirUbicacion());
+          },
+          onCameraMove: (v) => blMap.add(OnMoveMap(v.target)),
+        );
       },
-      onCameraMove: (v) => blMap.add(OnMoveMap(v.target)),
     );
   }
 }

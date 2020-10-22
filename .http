@@ -1,0 +1,14 @@
+@api=https://api.mapbox.com
+@tk=access_token=pk.eyJ1Ijoibml4cm95YWwiLCJhIjoiY2tnaTVuZ3hnMDAxczJycWV0b2pjN3dlOCJ9.99ztvQBxs37GfxSU1GTqvg
+@beginAndEnd=-77.01606519619995,-12.07286310362231;-77.0266698684707,-12.093401199141852
+@lang=language=es
+
+GET {{api}}/directions/v5/mapbox/driving/{{beginAndEnd}}?{{tk}}&{{lang}}&alternatives=true&geometries=polyline6&steps=false
+###
+GET {{api}}/geocoding/v5/mapbox.places/La victoria.json?{{tk}}&autocomplete=true&proximity=-77.016799,-12.075185&{{lang}}&languageMode=strict
+
+###
+GET {{api}}/geocoding/v5/mapbox.places/-73.989,40.733.json?{{tk}}&{{lang}}
+
+###
+GET https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?access_token=pk.eyJ1Ijoibml4cm95YWwiLCJhIjoiY2s2ZWhhYWNsMGJydjNscDZqbHdoZ3k4YiJ9.lVS07dmXyvIN5VB7j6A8vA
